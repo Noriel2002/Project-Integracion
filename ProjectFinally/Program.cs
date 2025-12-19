@@ -101,7 +101,7 @@ try
                 "http://localhost:5178",
                 "http://localhost:5179",
                 "http://localhost:5180",
-                "https://your-frontend.onrender.com" // <-- Cambiar por tu frontend en Render
+                "https://sigeya.netlify.app" // <-- Cambiar por tu frontend en Render
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
