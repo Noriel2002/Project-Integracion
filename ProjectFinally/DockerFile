@@ -1,16 +1,16 @@
-# Etapa de construcción
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /app
+# Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
 
-COPY . ./
+COPY . .
 RUN dotnet restore
-RUN dotnet publish -c Release -o out
+RUN dotnet publish ProjectFinally/ProjectFinally.csproj -c Release -o /app/publish
 
-# Etapa de ejecución
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+# Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
-COPY --from=build /app/out .
+COPY --from=build /app/publish .
+ENV ASPNETCORE_URLS=http://+:10000
+EXPOSE 10000
 
-# Render usa la variable PORT
-ENV ASPNETCORE_URLS=http://+:$PORT
 ENTRYPOINT ["dotnet", "ProjectFinally.dll"]
